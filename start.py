@@ -3,4 +3,4 @@ import instagram_api
 import instagram_web
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug = True)

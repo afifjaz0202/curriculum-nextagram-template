@@ -1,0 +1,44 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div align="center">
+                <br>
+                <h1>{{ user.username }}</h1>
+
+                <br>
+
+                <img src="{{ user.full_image_path }}" class="avatar-lg rounded-circle" width="200px" height="200px" style="object-fit: cover;"/>
+
+                <br>
+                <br>
+
+                {% if current_user.username == user.username %}
+                    <a style="text-decoration:none;" href="{{ url_for('images.new') }}">Upload Image</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr style="margin: 25px 100px;">
+
+<div align="center">
+    <div class="container">
+        <div class="row">
+            {% for image in user.images %}
+                <div class="col-4" style="padding-bottom: 35px;">
+                    <img src="{{ image.full_image_url }}" width="350px" height="350px" style="object-fit: cover;"/>
+
+                    {% if current_user.username != user.username %}
+                        <a style="text-decoration:none;" href="{{ url_for('payments.new', image_id = image.id) }}">Donate</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

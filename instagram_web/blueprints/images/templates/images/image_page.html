@@ -1,0 +1,23 @@
+{% extends '_layout.html' %}
+{% block content %}
+<div align="center">
+    <h1>Image Donated Page</h1>
+
+    <br>
+
+    <h2>You have successfully donated to Image {{ image.id }}!</h2>
+
+    <img src="{{ image.full_image_url }}" width="500px" height="500px" style="object-fit: cover;"/>
+
+    <br>
+
+    <ul>
+        {% for payment in image.payments %}
+            <li>
+                {{ payment.user.username }}: {{ payment.amount }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
