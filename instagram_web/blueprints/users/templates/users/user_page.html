@@ -6,7 +6,7 @@
         <div class="col-12">
             <div align="center">
                 <br>
-                <h1>{{ user.username }}</h1>
+                <h1>@{{ user.username }}</h1>
 
                 <br>
 
@@ -17,6 +17,8 @@
 
                 {% if current_user.username == user.username %}
                     <a style="text-decoration:none;" href="{{ url_for('images.new') }}">Upload Image</a>
+                {% else %}
+                    <a style="text-decoration: none;" href="/">Follow</a>
                 {% endif %}
             </div>
         </div>
@@ -25,20 +27,28 @@
 
 <hr style="margin: 25px 100px;">
 
-<div align="center">
-    <div class="container">
-        <div class="row">
-            {% for image in user.images %}
-                <div class="col-4" style="padding-bottom: 35px;">
-                    <img src="{{ image.full_image_url }}" width="350px" height="350px" style="object-fit: cover;"/>
+{% if current_user.id == user.id or not user.is_private %}
+    <div align="center">
+        <div class="container">
+            <div class="row">
+                {% for image in user.images %}
+                    <div class="col-4" style="padding-bottom: 35px;">
+                        <img src="{{ image.full_image_url }}" width="350px" height="350px" style="object-fit: cover;"/>
 
-                    {% if current_user.username != user.username %}
-                        <a style="text-decoration:none;" href="{{ url_for('payments.new', image_id = image.id) }}">Donate</a>
-                    {% endif %}
-                </div>
-            {% endfor %}
+                        {% if current_user.username != user.username %}
+                            <a style="text-decoration:none;" class="btn btn-primary" href="{{ url_for('payments.new', image_id = image.id) }}">Donate</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+{% else %}
+    <br>
+
+    <div align="Center">
+        <h4>This profile is private. Follow them to see their images!</h4>
+    </div>
+{% endif %}
 
 {% endblock %}

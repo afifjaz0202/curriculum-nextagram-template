@@ -5,6 +5,7 @@ from models.payment import Payment
 from models.user import User
 from flask_login import current_user,login_required
 import requests
+import os
 
 payments_blueprint = Blueprint("payments",
                                 __name__,
@@ -34,10 +35,11 @@ def create(image_id):
     if result.is_success or result.transaction:
         payment = Payment(user_id = current_user.id, image_id = image_id, amount = amount)
         payment.save()
+        mg_key = os.environ.get('MAILGUN_API_KEY')
 
         result = requests.post(
             "https://api.mailgun.net/v3/sandboxdb0c2cd1760a44d08240d1f87633eeab.mailgun.org/messages",
-            auth=("api", "f{os.environ.get('MAILGUN_API_KEY')}"),
+            auth=("api", "'{}'.format(mg_key)"),
             data={"from": "Excited User <mailgun@sandboxdb0c2cd1760a44d08240d1f87633eeab.mailgun.org>",
                 "to": ["afifjaz0202@gmail.com"],
                 "subject": "Hello",
