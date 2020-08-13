@@ -1,9 +1,9 @@
-from flask import Blueprint
+from flask import Blueprint, jsonify
 
 users_api_blueprint = Blueprint('users_api',
                              __name__,
                              template_folder='templates')
 
 @users_api_blueprint.route('/', methods=['GET'])
-def index():
+def new():
     return "USERS API"
