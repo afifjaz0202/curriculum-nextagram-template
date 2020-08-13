@@ -6,7 +6,6 @@ from models.user import User
 from flask_wtf import CSRFProtect
 from flask_login import LoginManager
 
-
 web_dir = os.path.join(os.path.dirname(
     os.path.abspath(__file__)), 'instagram_web')
 
